@@ -244,7 +244,6 @@ for (let i = 0; i < 30; i++) {
     grave.rotation.x = (Math.random() - 0.5) * 0.4;
     grave.rotation.y = (Math.random() - 0.5) * 0.4;
     grave.rotation.z = (Math.random() - 0.5) * 0.4;
-    grave.castShadow = true;
 
     // Add to graves group
     graves.add(grave);
@@ -319,6 +318,29 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+/**
+ * Shadows
+ */
+// Renderer
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+// Cast and receive
+directionalLight.castShadow = true;
+ghost1.castShadow = true;
+ghost2.castShadow = true;
+ghost3.castShadow = true;
+
+walls.castShadow = true;
+walls.receiveShadow = true;
+roof.castShadow = true;
+floor.receiveShadow = true;
+
+for(const grave of graves.children) {
+    grave.castShadow = true;
+    grave.receiveShadow = true;
+}
 
 /**
  * Animate
