@@ -92,6 +92,17 @@ graveColorTexture.repeat.set(0.3, 0.4);
 graveARMTexture.repeat.set(0.3, 0.4);
 graveNormalTexture.repeat.set(0.3, 0.4);
 
+// Door
+const doorAlphaTexture = textureLoader.load('/door/alpha.jpg');
+const doorColorTexture = textureLoader.load('/door/color.webp');
+const doorAmbientOcclusionTexture = textureLoader.load('/door/ambientOcclusion.webp');
+const doorHeightTexture = textureLoader.load('/door/height.webp');
+const doorNormalTexture = textureLoader.load('/door/normal.webp');
+const doorMetalnessTexture = textureLoader.load('/door/metalness.webp');
+const doorRoughnessTexture = textureLoader.load('/door/roughness.webp');
+
+doorColorTexture.colorSpace = THREE.SRGBColorSpace;
+
 /**
  * House
  */
@@ -152,8 +163,19 @@ house.add(roof);
 
 // Door
 const door = new THREE.Mesh(
-    new THREE.BoxGeometry(2.2, 2.2, 0.1),
-    new THREE.MeshStandardMaterial()
+    new THREE.PlaneGeometry(2.2, 2.2,  100, 100),
+    new THREE.MeshStandardMaterial({
+        alphaMap: doorAlphaTexture,
+        transparent: true,
+        map: doorColorTexture,
+        aoMap: doorAmbientOcclusionTexture,
+        displacementMap: doorHeightTexture,
+        displacementScale: 0.15,
+        displacementBias: -0.04,
+        metalnessMap: doorMetalnessTexture,
+        roughnessMap: doorRoughnessTexture,
+        normalMap: doorNormalTexture,
+    })
 );
 door.position.y = 1;
 door.position.z = 2;
